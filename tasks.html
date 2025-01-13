@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks Progress</title>
+  <link rel="stylesheet" href="tasks.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        TaskMaster
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="workers.html">Workers</a></li>
+        <li><a href="tasks.html" style="color:#7dade7;">Tasks</a></li>
+        <li><a href="assign-tasks.html">Assign Tasks</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h1>Tasks Dashboard</h1>
+      
+      <div class="task-actions">
+        <button id="addTaskButton">Add Existing Task</button>
+        <button id="newTaskButton">Add New Task</button>
+      </div>
+      <div id="existingTaskFormContainer" style="display: none;">
+        <h3>Add Existing Task</h3>
+        <form id="existingTaskForm">
+          <label for="taskId">Task ID:</label>
+          <input type="text" id="taskId" name="taskId" required>
+          <br>
+          <button type="submit" id="existingTasksubmit">Submit Task</button>
+        </form>
+      </div>
+      <div id="newTaskFormContainer" style="display: none;">
+        <h3>Add a New Task</h3>
+        <form id="newTaskForm">
+          <label for="taskName">Task Name:</label>
+          <input type="text" id="taskName" name="taskName" required>
+          <br>
+          <label for="requiredSkills">Required Skills:</label>
+          <input type="text" id="requiredSkills" name="requiredSkills" required>
+          <br>
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" required>
+          <br>
+          <label for="urgency">Urgency:</label>
+          <input type="text" id="urgency" name="urgency" required>
+          <br>
+          <label for="timePeriod">Time Period:</label>
+          <input type="text" id="timePeriod" name="timePeriod" required>
+          <br>
+          <button type="submit" id="newTasksubmit">Submit Task</button>
+        </form>
+      </div>
+      
+      <div class="task-progress-container">
+        <div class="table">
+          
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="tasks.js"></script>
+</body>
+</html>
