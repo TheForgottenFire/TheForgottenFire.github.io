@@ -67,11 +67,7 @@ body {
     color: #7dade7;
   }
   
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
+  
   
   .main-content h1 {
     text-align: center;
@@ -115,8 +111,11 @@ body {
   .main-content {
     padding: 20px;
     text-align: center;
+    font-family: Arial, sans-serif;
+    flex: 1;
+    flex-grow: 1;
+    background-color: #f9f9f9;
   }
-  
   .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -124,12 +123,12 @@ body {
     padding: 20px;
   }
   
-/* General styles for the main content */
-.main-content {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
+
+  .logout{
+    cursor: pointer;
   }
+/* General styles for the main content */
+
   
   /* Container for task progress sections */
   .task-progress-container {
@@ -167,10 +166,6 @@ body {
   }
   /* General Styles */
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-}
 
 /* AWS-Themed Table Styles */
 .aws-themed-table {

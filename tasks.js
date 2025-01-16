@@ -186,3 +186,9 @@ document.getElementById("existingTasksubmit").addEventListener("click", async (e
     console.error("Error adding task:", error);
   }
 });
+
+function logout(){
+  sessionStorage.clear();
+  alert("You have been logged out");
+  window.location.href = 'login.html';
+}

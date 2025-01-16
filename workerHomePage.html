@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        TaskMaster
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="home.html" style="color:#7dade7;">Home</a></li>
+        <li><a href="workers.html">Workers</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="assign-tasks.html">Assign Tasks</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+        <h1> Workers task </h1>
+        <div class="allocated_task">
+            
+        </div>
+        <button>Task Completed</button>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="home.js"></script>
+</body> -->
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Task Management</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: calc(100vw -220px);
+      height: 100vh;
+      flex-wrap: wrap;
+      padding-top: 50px;
+    }
+
+    .container{
+      width: fit-content;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+      border: 1px solid #e0e0e0; 
+      border-radius: 10px;
+      padding: 20px 50px;
+    }
+
+    .main-content h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center; /* Center-align the heading */
+      color: #333; /* Neutral color for the heading */
+    }
+
+  
+    .main-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555; /* Softer color for regular text */
+    }
+
+    button {
+      background-color: #007bff; /* Primary blue color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .logout{
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+          <ul>
+            TaskMaster
+          </ul>
+        </nav>
+      </header>
+    
+      <div class="layout">
+        <aside class="sidebar">
+          <ul>
+            <li><a id="logout" onclick="logout()">Logout</a></li>
+          </ul>
+        </aside>
+    
+        <main class="main-content">
+            <div class="container">
+              <h1>Your Task</h1>
+              <div id="taskList"></div>
+              <p id="loadingMessage">Loading tasks...</p>
+              <button>Task Completed</button>
+            </div>
+        </main>
+      </div>
+
+  <script>
+
+    const datastring = localStorage.getItem("data");
+    const data = JSON.parse(datastring);
+    // console.log(data.tasks[0]);
+    renderTasks(data.tasks[0]);
+    
+
+    // Render tasks for the worker
+    function renderTasks(task) {
+      const taskList = document.getElementById("taskList");
+      document.getElementById("loadingMessage").style.display = "none"; 
+      taskList.innerHTML = ""; // Clear previous tasks
+
+      if (!task || task.length === 0) {
+        taskList.innerHTML = "<p>No tasks assigned to you.</p>";
+        return;
+      }
+
+        const taskContainer = document.createElement("div");
+        taskContainer.className = `task-container ${task.taskstatus === "Completed" ? "completed" : ""}`;
+        taskContainer.innerHTML = `
+          <h3>${task.taskname}</h3>
+          <p><strong>Location:</strong> ${task.location}</p>
+          <p><strong>Time required:</strong> ${task.timerequired}</p>
+          <p><strong>Status:</strong>${task.taskstatus}</span></p>
+        `;
+          // <p><strong>Urgency:</strong> ${task.urgency}</p> 
+
+        taskList.appendChild(taskContainer);
+    }
+    
+    function logout(){
+      sessionStorage.clear();
+      alert("You have been logged out");
+      window.location.href = 'login.html';
+    }
+      
+  </script>
+</body>
+</html>

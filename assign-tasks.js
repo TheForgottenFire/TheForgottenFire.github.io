@@ -9,7 +9,7 @@ form.addEventListener('submit', async (event) => {
   const timeLimit = document.getElementById('time-limit').value;
   const assignedPerson = document.getElementById('assigned-person').value;
   const urgancy = document.getElementById('urgancy').value;
-
+  const worker_id = document.getElementById('worker_id').value;
 
   const taskData = {
     "task_name": taskName,
@@ -17,12 +17,14 @@ form.addEventListener('submit', async (event) => {
     "skillsrequired": skillsRequired,
     "timerequired": timeLimit,
     "worker_name": assignedPerson,
-    "urgancy": urgancy
+    "urgancy": urgancy,
+    "worker_id": worker_id
   };
 
   console.log(taskData);
   try {
-    const response = await fetch('https://4w08djglj1.execute-api.us-east-1.amazonaws.com/test/', {
+    // const response = await fetch('https://4w08djglj1.execute-api.us-east-1.amazonaws.com/test/', {
+      const response = await fetch('https://wby4phuc2h.execute-api.us-east-1.amazonaws.com/deploy/AssignTask', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,3 +48,22 @@ form.addEventListener('submit', async (event) => {
   }
 });
 
+
+function logout(){
+  sessionStorage.clear();
+  alert("You have been logged out");
+  window.location.href = 'login.html';
+}
+
+  
+if(sessionStorage.getItem("login")==undefined || !sessionStorage.getItem("login") || sessionStorage.getItem("login")==false){
+  window.location.href = "login.html";
+}else if(sessionStorage.getItem("login")==true && sessionStorage.getItem("access")==false){
+  if (sessionStorage.getItem("workerid") && sessionStorage.getItem("workerid")!=null){
+    window.location.href = "workerHomePage.html";
+  }else{
+    sessionStorage.setItem("login")=false;
+    sessionStorage.setItem("access")=false;
+    sessionStorage.setItem("workerid")=null;
+  }
+}else{}

@@ -16,6 +16,10 @@
     overflow: hidden; /* To apply rounded corners properly */
 }
 
+
+#logout{
+    cursor: pointer;
+  }
 /* Table header styles */
 .table th {
     background-color: #ccdcff; /* Slightly lighter blue for the header */

@@ -232,7 +232,22 @@
     }
   }
   
-  // Call the function to fetch and populate the table
   fetchAndPopulateTable();
   
+if(sessionStorage.getItem("login")==undefined || !sessionStorage.getItem("login") || sessionStorage.getItem("login")==false){
+  window.location.href = "login.html";
+}else if(sessionStorage.getItem("login")==true && sessionStorage.getItem("access")==false){
+  if (sessionStorage.getItem("workerid") && sessionStorage.getItem("workerid")!=null){
+    window.location.href = "workerHomePage.html";
+  }else{
+    sessionStorage.setItem("login")=false;
+    sessionStorage.setItem("access")=false;
+    sessionStorage.setItem("workerid")=null;
+  }
+}else{}
 
+function logout(){
+  sessionStorage.clear();
+  alert("You have been logged out");
+  window.location.href = 'login.html';
+}
