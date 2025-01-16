@@ -98,7 +98,7 @@
       background-color: #0056b3; /* Darker blue on hover */
     }
 
-    .logout{
+    #logout{
       cursor: pointer;
     }
 
@@ -116,7 +116,7 @@
       <div class="layout">
         <aside class="sidebar">
           <ul>
-            <li><a id="logout" onclick="logout()">Logout</a></li>
+            <li><a id="logout" onclick="logout()" >Logout</a></li>
           </ul>
         </aside>
     
@@ -125,48 +125,100 @@
               <h1>Your Task</h1>
               <div id="taskList"></div>
               <p id="loadingMessage">Loading tasks...</p>
-              <button>Task Completed</button>
+              <button id="button" onclick="completetask()">Task Completed</button>
             </div>
         </main>
       </div>
 
   <script>
+async function completetask() {
+  try {
+    const workerid = sessionStorage.getItem("workerid");
+    if (!workerid) {
+      alert("Worker ID not found in session.");
+      return;
+    }
 
-    const datastring = localStorage.getItem("data");
+    const datastring = sessionStorage.getItem("data");
+    if (!datastring) {
+      alert("No task data found in session.");
+      return;
+    }
+
     const data = JSON.parse(datastring);
-    // console.log(data.tasks[0]);
-    renderTasks(data.tasks[0]);
-    
-
-    // Render tasks for the worker
-    function renderTasks(task) {
-      const taskList = document.getElementById("taskList");
-      document.getElementById("loadingMessage").style.display = "none"; 
-      taskList.innerHTML = ""; // Clear previous tasks
-
-      if (!task || task.length === 0) {
-        taskList.innerHTML = "<p>No tasks assigned to you.</p>";
-        return;
-      }
-
-        const taskContainer = document.createElement("div");
-        taskContainer.className = `task-container ${task.taskstatus === "Completed" ? "completed" : ""}`;
-        taskContainer.innerHTML = `
-          <h3>${task.taskname}</h3>
-          <p><strong>Location:</strong> ${task.location}</p>
-          <p><strong>Time required:</strong> ${task.timerequired}</p>
-          <p><strong>Status:</strong>${task.taskstatus}</span></p>
-        `;
-          // <p><strong>Urgency:</strong> ${task.urgency}</p> 
-
-        taskList.appendChild(taskContainer);
+    const task = data.tasks[0]; // Assuming first task is the one being completed
+    if (!task) {
+      alert("No task assigned.");
+      return;
     }
-    
-    function logout(){
-      sessionStorage.clear();
-      alert("You have been logged out");
-      window.location.href = 'login.html';
+
+    const api = "https://fqe667mowc.execute-api.us-east-1.amazonaws.com/worker_done/done";
+    const response = await fetch(api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        workerid: workerid,
+        taskname: task.taskname,
+      }),
+    });
+    console.log();
+    if (!response.ok) {
+      throw new Error(`Failed to complete task: ${response.statusText}`);
     }
+
+    alert("Task marked as completed!");
+    // location.reload(); // Refresh the page to show updated task status
+  } catch (error) {
+    console.error("Error in completing task:", error);
+    alert("An error occurred while completing the task.");
+  }
+}
+
+const datastring = sessionStorage.getItem("data");
+if (!datastring) {
+  alert("No task data found in session.");
+} else {
+  const data = JSON.parse(datastring);
+  renderTasks(data.tasks[0]);
+}
+
+// Render tasks for the worker
+function renderTasks(task) {
+  const taskList = document.getElementById("taskList");
+  const button = document.getElementById("button");
+
+  // Hide loading message
+  document.getElementById("loadingMessage").style.display = "none";
+
+  // Clear previous tasks
+  taskList.innerHTML = "";
+
+  if (!task) {
+    taskList.innerHTML = "<p>No tasks assigned to you.</p>";
+    if (button) button.style.display = "none";
+    return;
+  }
+
+  const taskContainer = document.createElement("div");
+  taskContainer.className = `task-container ${task.taskstatus === "Completed" ? "completed" : ""}`;
+  taskContainer.innerHTML = `
+    <h3>${task.taskname}</h3>
+    <p><strong>Location:</strong> ${task.location}</p>
+    <p><strong>Time required:</strong> ${task.timerequired}</p>
+    <p><strong>Status:</strong> ${task.taskstatus}</p>
+  `;
+
+  taskList.appendChild(taskContainer);
+}
+
+function logout() {
+  sessionStorage.clear();
+  alert("You have been logged out");
+  window.location.href = "login.html";
+}
+
       
   </script>
 </body>

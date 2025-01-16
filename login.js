@@ -25,13 +25,14 @@ document.getElementById("login-form").addEventListener("submit", async function 
       alert("Login successful!");
       var t = JSON.parse(data.body);
       console.log(t);
-
+      sessionStorage.setItem("workerid",username);
       sessionStorage.setItem("access", t.access);
       sessionStorage.setItem("login",true);
       sessionStorage.setItem("data",JSON.stringify(t));
       if(t.access===true){
         window.location.href = "home.html";
       }else{
+        console.log(sessionStorage.getItem("data"));
         window.location.href = "workerHomePage.html";
       }
 
@@ -39,6 +40,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
       const loginMessage = document.getElementById("login-message");
       loginMessage.textContent = data.message || "Invalid credentials. Please try again.";
       loginMessage.style.display = "block";
+      console.log(data);
     }
   } catch (error) {
     console.error("Error logging in:", error);
@@ -50,10 +52,11 @@ document.getElementById("login-form").addEventListener("submit", async function 
 });
 
 console.log(sessionStorage.getItem("login"));
-if(sessionStorage.getItem("login")==true){
-  if(sessionStorage.getItem("access")===true){
-    window.location.href = "home.html";
-  }else{
-    window.location.href = "workerHomePage.html";
-  }
-}
+console.log(sessionStorage.getItem("access"));
+// if(sessionStorage.getItem("login")===true){
+//   if(sessionStorage.getItem("access")===true){
+//     window.location.href = "home.html";
+//   }else{
+//     window.location.href = "workerHomePage.html";
+//   }
+// }
