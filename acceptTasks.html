@@ -6,6 +6,76 @@
   <title>Home</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="home.css">
+  <style>
+    /* Table Styles */
+table {
+  border-collapse: collapse;
+  width: 90%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensures proper corner rounding */
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #1b2531; /* Dark header background */
+  color: white;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+tr:hover {
+  background-color: #e6f7ff; /* Soft blue hover effect */
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Loading and Error Messages */
+.loading-message {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 18px;
+  color: red;
+}
+
+/* Action Buttons */
+.action-button {
+  background-color: #004692; /* Dark blue for buttons */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.action-button:hover {
+  background-color: #0056b3; /* Lighter blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.action-button:active {
+  transform: scale(0.95); /* Pressed effect */
+}
+
+  </style>
 </head>
 <body>
   <header class="header">
@@ -19,22 +89,145 @@
   <div class="layout">
     <aside class="sidebar">
       <ul>
-        <li><a href="home.html" style="color:#7dade7;">Home</a></li>
+        <li><a href="home.html">Home</a></li>
         <li><a href="workers.html">Workers</a></li>
         <li><a href="tasks.html">Tasks</a></li>
-        <li><a href="assign-tasks.html">Assign Tasks</a></li>
-        <li><a href="acceptTasks.html" style="color:#7dade7;">Completed Tasks</a></li>
+        <li><a href="assign-tasks.html">Assign Task</a></li>
+        <li><a href="acceptTasks.html" style="color:#7dade7;">Submit Approval</a></li>
         <li><a id="logout" onclick="logout()">Logout</a></li>
       </ul>
     </aside>
 
     <main class="main-content">
-      <h1>Task </h1>
-
+      <h1>Task</h1>
+      <div id="content">
+        <p class="loading-message">Loading tasks...</p>
+      </div>
     </main>
-    
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="home.js"></script>
+
+  <script>
+    // Handle accept/reject actions
+async function handleAction(workerid, taskname, action) {
+  const apiUrl = `https://eaxs5uofsi.execute-api.us-east-1.amazonaws.com/done3/done3`;
+  const requestData = {
+    workerid: workerid,
+    taskname: taskname,
+    action: action,
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    alert(`Task ${action === "accept" ? "accepted" : "rejected"} successfully!`);
+    fetchData(); // Reload the tasks
+  } catch (error) {
+    console.error(`Failed to ${action} task:`, error);
+    alert(`Failed to ${action} task. Please try again.`);
+  }
+}
+
+// Update the fetchData function to pass workerid and taskname
+async function fetchData() {
+  const contentDiv = document.getElementById("content");
+  contentDiv.innerHTML = '<p class="loading-message">Loading tasks...</p>';
+
+  try {
+    const apiUrl = "https://oa6kcvjlx4.execute-api.us-east-1.amazonaws.com/done2/done2";
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const d2 = JSON.parse(data.body);
+
+    const tasks = d2.tasks;
+    console.log(tasks);
+
+    if ( !tasks || tasks === undefined || tasks.length === 0 ) {
+      contentDiv.innerHTML = '<p class="error-message">No tasks found.</p>';
+      return;
+    }
+
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+
+    const columns = ["taskname", "workername", "skillsrequired", "location", "urgency"];
+
+    const headerRow = document.createElement("tr");
+    columns.forEach(column => {
+      const th = document.createElement("th");
+      th.textContent = column.charAt(0).toUpperCase() + column.slice(1);
+      headerRow.appendChild(th);
+    });
+
+    const actionTh = document.createElement("th");
+    actionTh.textContent = "Actions";
+    headerRow.appendChild(actionTh);
+
+    thead.appendChild(headerRow);
+
+    tasks.forEach(task => {
+      const row = document.createElement("tr");
+
+      columns.forEach(column => {
+        const td = document.createElement("td");
+        td.textContent = task[column];
+        row.appendChild(td);
+      });
+
+      const actionTd = document.createElement("td");
+      const correctButton = document.createElement("button");
+      correctButton.textContent = "Accept";
+      correctButton.classList.add("action-button");
+      correctButton.onclick = () => handleAction(task.workerid, task.taskname, "accept");
+
+      const wrongButton = document.createElement("button");
+      wrongButton.textContent = "Wrong";
+      wrongButton.classList.add("action-button");
+      wrongButton.onclick = () => handleAction(task.workerid, task.taskname, "reject");
+
+      actionTd.appendChild(correctButton);
+      // actionTd.appendChild(wrongButton);
+      row.appendChild(actionTd);
+
+      tbody.appendChild(row);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    contentDiv.innerHTML = "";
+    contentDiv.appendChild(table);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    contentDiv.innerHTML = '<p class="error-message">Failed to load tasks. Please try again later.</p>';
+  }
+}
+
+
+function logout() {
+  sessionStorage.clear();
+  alert("You have been logged out");
+  window.location.href = "login.html";
+}
+
+fetchData();
+
+  </script>
 </body>
 </html>

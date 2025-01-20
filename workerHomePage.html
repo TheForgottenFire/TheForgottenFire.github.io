@@ -1,45 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="home.css">
-</head>
-<body>
-  <header class="header">
-    <nav class="nav">
-      <ul>
-        TaskMaster
-      </ul>
-    </nav>
-  </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <ul>
-        <li><a href="home.html" style="color:#7dade7;">Home</a></li>
-        <li><a href="workers.html">Workers</a></li>
-        <li><a href="tasks.html">Tasks</a></li>
-        <li><a href="assign-tasks.html">Assign Tasks</a></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
-    </aside>
-
-    <main class="main-content">
-        <h1> Workers task </h1>
-        <div class="allocated_task">
-            
-        </div>
-        <button>Task Completed</button>
-    </main>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="home.js"></script>
-</body> -->
-</html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -122,15 +81,15 @@
     
         <main class="main-content">
             <div class="container">
-              <h1>Your Task</h1>
+              <h1 id="h1">Your Task</h1>
               <div id="taskList"></div>
               <p id="loadingMessage">Loading tasks...</p>
               <button id="button" onclick="completetask()">Task Completed</button>
             </div>
         </main>
       </div>
-
   <script>
+
 async function completetask() {
   try {
     const workerid = sessionStorage.getItem("workerid");
@@ -146,11 +105,15 @@ async function completetask() {
     }
 
     const data = JSON.parse(datastring);
-    const task = data.tasks[0]; // Assuming first task is the one being completed
+    const task = data.tasks[0]; 
     if (!task) {
       alert("No task assigned.");
       return;
     }
+    const body = JSON.stringify({
+        workerid: workerid,
+        taskname: task.taskname,
+      });
 
     const api = "https://fqe667mowc.execute-api.us-east-1.amazonaws.com/worker_done/done";
     const response = await fetch(api, {
@@ -160,16 +123,18 @@ async function completetask() {
       },
       body: JSON.stringify({
         workerid: workerid,
-        taskname: task.taskname,
-      }),
+        taskname: task.taskname
+      })
     });
-    console.log();
+    
     if (!response.ok) {
       throw new Error(`Failed to complete task: ${response.statusText}`);
     }
 
+    sessionStorage.setItem("data",null);
+
     alert("Task marked as completed!");
-    // location.reload(); // Refresh the page to show updated task status
+    location.reload(); 
   } catch (error) {
     console.error("Error in completing task:", error);
     alert("An error occurred while completing the task.");
@@ -180,22 +145,19 @@ const datastring = sessionStorage.getItem("data");
 if (!datastring) {
   alert("No task data found in session.");
 } else {
-  const data = JSON.parse(datastring);
-  renderTasks(data.tasks[0]);
+    const data = JSON.parse(datastring);
+    renderTasks(data);
 }
 
-// Render tasks for the worker
-function renderTasks(task) {
+function renderTasks(tasks) {
+  const task = tasks == null ? null : tasks.tasks[0];
   const taskList = document.getElementById("taskList");
   const button = document.getElementById("button");
 
-  // Hide loading message
   document.getElementById("loadingMessage").style.display = "none";
 
-  // Clear previous tasks
   taskList.innerHTML = "";
-
-  if (!task) {
+  if (!tasks) {
     taskList.innerHTML = "<p>No tasks assigned to you.</p>";
     if (button) button.style.display = "none";
     return;
@@ -209,7 +171,7 @@ function renderTasks(task) {
     <p><strong>Time required:</strong> ${task.timerequired}</p>
     <p><strong>Status:</strong> ${task.taskstatus}</p>
   `;
-
+  if (task.taskstatus=="done"){ button.style.display = "none";}
   taskList.appendChild(taskContainer);
 }
 
@@ -218,7 +180,6 @@ function logout() {
   alert("You have been logged out");
   window.location.href = "login.html";
 }
-
       
   </script>
 </body>
