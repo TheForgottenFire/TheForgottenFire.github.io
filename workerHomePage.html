@@ -14,12 +14,27 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      width: calc(100vw -220px);
-      height: 100vh;
+      width: 100vw;
+      height: 90vh;
       flex-wrap: wrap;
-      padding-top: 50px;
+      padding-top: 30vh;
     }
+.sidebar ul li {
+    padding: 0 10px 0 20px;
+}
+.layout{
+display:flex;
+flex-direction:column;
+padding:0;
+margin:0;
+}
 
+.sidebar{
+position:relative;
+height:auto;
+width:100%;
+padding:0;
+}
     .container{
       width: fit-content;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -157,12 +172,17 @@ function renderTasks(tasks) {
   document.getElementById("loadingMessage").style.display = "none";
 
   taskList.innerHTML = "";
+  console.log(tasks);
   if (!tasks) {
     taskList.innerHTML = "<p>No tasks assigned to you.</p>";
     if (button) button.style.display = "none";
     return;
   }
-
+  if(tasks.message=="Login successful! No tasks allocated."){
+    taskList.innerHTML = "<p>No tasks assigned to you.</p>";
+    if (button) button.style.display = "none";
+    return;
+  }
   const taskContainer = document.createElement("div");
   taskContainer.className = `task-container ${task.taskstatus === "Completed" ? "completed" : ""}`;
   taskContainer.innerHTML = `
