@@ -1,83 +1,3 @@
-// Worker A Performance (Bar Chart)
-// new Chart(document.getElementById('workerAChart'), {
-//     type: 'bar',
-//     data: {
-//       labels: ['Tasks Completed', 'Efficiency (%)', 'Break Time (Minutes)', 'Defects Identified'],
-//       datasets: [{
-//         label: 'Worker A Performance',
-//         data: [20, 90, 15, 3], // Example data
-//         backgroundColor: '#36a2eb'
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: { display: true },
-//         title: { display: true, text: 'Worker A Performance' }
-//       }
-//     }
-//   });
-  
-//   // Worker B Performance (Pie Chart)
-//   new Chart(document.getElementById('workerBChart'), {
-//     type: 'bar',
-//     data: {
-//       labels: ['Tasks Completed', 'Efficiency (%)', 'Break Time (Minutes)', 'Defects Identified'],
-//       datasets: [{
-//         label: 'Worker B Performance',
-//         data: [20, 90, 15, 3], // Example data
-//         backgroundColor: '#36a2eb'
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: { display: true },
-//         title: { display: true, text: 'Worker B Performance' }
-//       }
-//     }
-//   });
-  
-//   // Worker C Performance (Line Chart)
-//   new Chart(document.getElementById('workerCChart'), {
-//     type: 'bar',
-//     data: {
-//       labels: ['Tasks Completed', 'Efficiency (%)', 'Break Time (Minutes)', 'Defects Identified'],
-//       datasets: [{
-//         label: 'Worker C Performance',
-//         data: [25, 50, 35, 7], // Example data
-//         backgroundColor: '#36a2eb'
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: { display: true },
-//         title: { display: true, text: 'Worker C Performance' }
-//       }
-//     }
-//   });
-  
-//   // Worker D Performance (Doughnut Chart)
-//   new Chart(document.getElementById('workerDChart'), {
-//     type: 'bar',
-//     data: {
-//       labels: ['Tasks Completed', 'Efficiency (%)', 'Break Time (Minutes)', 'Defects Identified'],
-//       datasets: [{
-//         label: 'Worker D Performance',
-//         data: [20, 30, 25, 13], // Example data
-//         backgroundColor: '#36a2eb'
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: { display: true },
-//         title: { display: true, text: 'Worker D Performance' }
-//       }
-//     }
-//   });
-  
 
   async function fetchAndPopulateTable() {
     const apiUrl = "https://wrbs1w3prc.execute-api.us-east-1.amazonaws.com/DEV/Workers"; 
@@ -157,4 +77,28 @@ function logout(){
   sessionStorage.clear();
   alert("You have been logged out");
   window.location.href = 'login.html';
+}
+
+function filterTable() {
+  const input = document.getElementById("searchInput");
+  const filter = input.value.toLowerCase();
+  const table = document.querySelector(".table table");
+  const rows = table.querySelectorAll("tr");
+
+  // Skip the header row
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    let match = false;
+
+    // Check if any cell in the row matches the filter text
+    for (let j = 0; j < cells.length; j++) {
+      if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+        match = true;
+        break;
+      }
+    }
+
+    // Show/hide the row based on match
+    rows[i].style.display = match ? "" : "none";
+  }
 }

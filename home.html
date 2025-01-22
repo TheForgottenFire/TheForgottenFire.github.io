@@ -25,6 +25,7 @@
         <li><a href="assign-tasks.html">Assign Task</a></li>
         <li><a href="acceptTasks.html">Submit Approval</a></li>
         <li><a href="taskhistory.html">Task History</a></li>
+        <li><a href="addWorker.html">Add worker</a></li>
         <li><a id="logout" onclick="logout()">Logout</a></li>
       </ul>
     </aside>
@@ -33,7 +34,12 @@
       <h1>Task Allocation and Monitoring Dashboard</h1>
 
       <div class="searchbar">
-
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search..." 
+          onkeyup="filterTable()" 
+        />
       </div>
 
       <div class="task-progress-container">
@@ -42,16 +48,6 @@
         </div>
       </div>
       
-      <!-- <div class="grid-container">
-        <div class="chart"><canvas id="tasksCompletedChart"></canvas></div>
-        <div class="chart"><canvas id="pendingTasksChart"></canvas></div>
-        <div class="chart"><canvas id="workerEfficiencyChart"></canvas></div>
-        <div class="chart"><canvas id="dailyProductivityChart"></canvas></div>
-        <div class="chart"><canvas id="overdueTasksChart"></canvas></div>
-        <div class="chart"><canvas id="shiftPerformanceChart"></canvas></div>
-        <div class="chart"><canvas id="breakTimeAnalysisChart"></canvas></div>
-        <div class="chart"><canvas id="qualityControlChart"></canvas></div>
-      </div> -->
     </main>
     
   </div>

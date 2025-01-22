@@ -52,3 +52,28 @@
         font-size: 14px; /* Adjust font size for smaller screens */
     }
 }
+
+/* Search Bar Styling */
+.searchbar input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Add focus effect */
+  .searchbar input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  
+  /* Placeholder text style */
+  .searchbar input[type="text"]::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }

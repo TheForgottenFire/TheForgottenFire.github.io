@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Table container styles */
+.task-progress-container {
+    padding: 20px 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 75vw;
+}
+.main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    background-color: #e1e9ff; 
+    color: black; 
+    font-family: Arial, sans-serif;
+    border-radius: 8px; 
+    overflow: auto; 
+}
+
+
+#logout{
+    cursor: pointer;
+  }
+/* Table header styles */
+.table th {
+    background-color: #ccdcff; /* Slightly lighter blue for the header */
+    color: #000000; /* White text */
+    text-align: center;
+    padding: 12px 16px;
+    font-weight: bold;
+}
+
+/* Table row styles */
+.table td {
+    padding: 12px ;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+/* Main content styling */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 100px auto auto auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 90%;
+}
+
+/* Heading styling */
+.main-content h1 {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+#worker-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Add space between form elements */
+  justify-content: center;
+  padding: auto;margin: auto;
+}
+
+/* Form labels */
+#worker-form label {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Form input fields */
+#worker-form input[type="text"] {
+  width:90%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
+  align-self: center;
+}
+
+/* Form input hover and focus */
+#worker-form input[type="text"]:focus {
+  border-color: #7dade7; /* Highlight border */
+  box-shadow: 0 0 5px rgba(125, 173, 231, 0.5); /* Subtle glow effect */
+  outline: none;
+}
+
+/* Submit button styling */
+#worker-form button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #7dade7;
+  color: white;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Submit button hover effect */
+#worker-form button[type="submit"]:hover {
+  background-color: #5c9ddf;
+}
+
+/* Success/Error message */
+#response-message {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+  }
+
+  #worker-form label {
+    font-size: 14px;
+  }
+
+  #worker-form input[type="text"] {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  #worker-form button[type="submit"] {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+}
+
+#response-message{
+    font-size: 16px;
+    font-weight: bold;
+    color: green;
+    margin-top: 10px;
+    text-align: center;
+}
+  </style>
+
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        TaskMaster
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="workers.html">Workers</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="assign-tasks.html">Assign Task</a></li>
+        <li><a href="acceptTasks.html">Submit Approval</a></li>
+        <li><a href="taskhistory.html">Task History</a></li>
+        <li><a href="addWorker.html" style="color:#7dade7;">Add worker</a></li>
+        <li><a id="logout" onclick="logout()">Logout</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+        <h1>Enter Worker Details</h1>
+        <form id="worker-form">
+          <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div>
+            <label for="rfid">RFID:</label>
+            <input type="text" id="rfid" name="rfid" required />
+          </div>
+          <div>
+            <label for="skills">Skills (comma-separated):</label>
+            <input type="text" id="skills" name="skills" placeholder="e.g., JavaScript, AWS, Python" required />
+          </div>
+          <button type="submit" onclick="">Submit</button>
+        </form>
+        <p id="response-message" style="color: green; margin-top: 10px;"></p>
+      </main>
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // write code to take input from user and push data using aws api
+    document.getElementById("worker-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // Get input values
+        const name = document.getElementById("name").value;
+        const rfid = document.getElementById("rfid").value;
+        const skills = document.getElementById("skills").value.split(",").map(skill => skill.trim());
+
+        // Create payload for API
+        const payload = {
+            name: name,
+            rfid: rfid,
+            skills: skills
+        };
+
+        try {
+        // Replace with your AWS API endpoint
+        const apiEndpoint = "https://mot3f5c4le.execute-api.us-east-1.amazonaws.com/addworker/addworker";
+        
+        const response = await fetch(apiEndpoint, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const d2 = JSON.parse(data.body);
+            console.log(d2);
+            alert(`Worker added successfully !! Worker Id: ${d2.login.username} | Worker Password: ${d2.login.password}`);
+            
+        } else {
+            throw new Error("Failed to submit worker details.");
+        }
+            } catch (error) {
+              console.error(error.message);
+            document.getElementById("response-message").style.color = "red";
+            document.getElementById("response-message").textContent = error.message;
+        }
+    });
+
+
+    if(sessionStorage.getItem("login")==undefined || !sessionStorage.getItem("login") || sessionStorage.getItem("login")==false){
+    window.location.href = "login.html";
+    }else if(sessionStorage.getItem("login")==true && sessionStorage.getItem("access")==false){
+    if (sessionStorage.getItem("workerid") && sessionStorage.getItem("workerid")!=null){
+        window.location.href = "workerHomePage.html";
+    }else{
+        sessionStorage.setItem("login")=false;
+        sessionStorage.setItem("access")=false;
+        sessionStorage.setItem("workerid")=null;
+    }
+    }else{}
+
+    function logout(){
+    sessionStorage.clear();
+    alert("You have been logged out");
+    window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

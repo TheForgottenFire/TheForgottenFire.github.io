@@ -64,6 +64,13 @@ async function fetchAndPopulateTable() {
       table.appendChild(row);
     });
 
+    const dataList = document.getElementById("taskIdOptions");
+    headerOrder.forEach((i) => {
+      const option = document.createElement("option");
+      option.value = i.taskid;
+      dataList.appendChild(option);
+    });
+
     tableContainer.appendChild(table);
   } catch (error) {
     console.error("Error fetching or displaying table data:", error);
@@ -214,4 +221,19 @@ function logout(){
   sessionStorage.clear();
   alert("You have been logged out");
   window.location.href = 'login.html';
+}
+
+// Function to filter tasks based on search input
+function filterTasks() {
+  const searchInput = document.getElementById("searchBar").value.toLowerCase();
+  const table = document.querySelector(".table table");
+  const rows = table.querySelectorAll("tr:not(:first-child)"); // Exclude the header row
+
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll("td");
+    const rowText = Array.from(cells)
+      .map((cell) => cell.textContent.toLowerCase())
+      .join(" ");
+    row.style.display = rowText.includes(searchInput) ? "" : "none";
+  });
 }

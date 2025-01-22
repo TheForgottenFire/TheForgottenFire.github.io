@@ -23,6 +23,8 @@
         <li><a href="tasks.html" style="color:#7dade7;">Tasks</a></li>
         <li><a href="assign-tasks.html">Assign Task</a></li>
         <li><a href="acceptTasks.html">Submit Approval</a></li>
+        <li><a href="taskhistory.html">Task History</a></li>
+        <li><a href="addWorker.html">Add worker</a></li>
         <li><a id="logout" onclick="logout()">Logout</a></li>
       </ul>
     </aside>
@@ -31,14 +33,15 @@
       <h1>Tasks Dashboard</h1>
       
       <div class="task-actions">
-        <button id="addTaskButton" class="button">Add Existing Task</button>
-        <button id="newTaskButton" class="button">Add New Task</button>
+        <button id="addTaskButton" class="button">Assign Existing Task</button>
+        <button id="newTaskButton" class="button">Assign New Task</button>
       </div>
       <div id="existingTaskFormContainer" style="display: none;">
         <h3>Assign Existing Task</h3>
         <form id="existingTaskForm">
           <label for="taskId">Task ID:</label>
           <input type="text" id="taskId" name="taskId" required>
+          <datalist id="taskIdOptions"></datalist>
           <br>
           <button type="submit" id="existingTasksubmit">Submit Task</button>
         </form>
@@ -63,6 +66,16 @@
           <br>
           <button type="submit" id="newTasksubmit">Submit Task</button>
         </form>
+      </div>
+      <div class="task-progress-container">
+        <input
+          type="text"
+          id="searchBar"
+          placeholder="Search tasks..."
+          class="search-bar"
+          onkeyup="filterTasks()"
+        />
+        <div class="table"></div>
       </div>
       
       <div class="task-progress-container">

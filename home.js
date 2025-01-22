@@ -55,6 +55,7 @@
         "Time Required"
       ];
       // Add table header
+      
       const headerRow = document.createElement("tr");
       titles.forEach((field) => {
         const th = document.createElement("th");
@@ -101,4 +102,31 @@ function logout(){
   sessionStorage.clear();
   alert("You have been logged out");
   window.location.href = 'login.html';
+}
+
+function filterTable() {
+  const searchInput = document.getElementById("searchInput").value.toLowerCase();
+  const table = document.querySelector(".table table");
+  const rows = table.getElementsByTagName("tr");
+
+  // Loop through all table rows (excluding the header row)
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const cells = row.getElementsByTagName("td");
+    let rowMatches = false;
+
+    // Loop through all cells in the row
+    for (let j = 0; j < cells.length; j++) {
+      const cellContent = cells[j].textContent || cells[j].innerText;
+
+      // Check if the cell content matches the search input
+      if (cellContent.toLowerCase().includes(searchInput)) {
+        rowMatches = true;
+        break;
+      }
+    }
+
+    // Show or hide the row based on the search match
+    row.style.display = rowMatches ? "" : "none";
+  }
 }

@@ -25,26 +25,26 @@
         <li><a href="assign-tasks.html">Assign Task</a></li>
         <li><a href="acceptTasks.html">Submit Approval</a></li>
         <li><a href="taskhistory.html">Task History</a></li>
+        <li><a href="addWorker.html">Add worker</a></li>
         <li><a id="logout" onclick="logout()">Logout</a></li>
       </ul>
     </aside>
 
     <main class="main-content">
       <h1>Workers Performance Dashboard</h1>
-
+    
+      <!-- Search Bar -->
+      <div class="searchbar">
+        <input type="text" id="searchInput" placeholder="Search workers by name or skills..." onkeyup="filterTable()">
+      </div>
+    
       <div class="worker-progress-container">
         <div class="table">
-          
+          <!-- Table will be populated here -->
         </div>
       </div>
-
-      <!-- <div class="grid-container">
-        <div class="chart"><canvas id="workerAChart"></canvas></div>
-        <div class="chart"><canvas id="workerBChart"></canvas></div>
-        <div class="chart"><canvas id="workerCChart"></canvas></div>
-        <div class="chart"><canvas id="workerDChart"></canvas></div>
-      </div> -->
     </main>
+    
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
