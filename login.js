@@ -30,7 +30,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
       sessionStorage.setItem("login",true);
       sessionStorage.setItem("data",JSON.stringify(t));
       if(t.access===true){
-        window.location.href = "home.html";
+        window.location.href = "index.html";
       }else{
         console.log(sessionStorage.getItem("data"));
         window.location.href = "workerHomePage.html";

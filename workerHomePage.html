@@ -19,22 +19,22 @@
       flex-wrap: wrap;
       padding-top: 30vh;
     }
-.sidebar ul li {
-    padding: 0 10px 0 20px;
-}
-.layout{
-display:flex;
-flex-direction:column;
-padding:0;
-margin:0;
-}
+    .sidebar ul li {
+        padding: 0 10px 0 20px;
+    }
+    .layout{
+    display:flex;
+    flex-direction:column;
+    padding:0;
+    margin:0;
+    }
 
-.sidebar{
-position:relative;
-height:auto;
-width:100%;
-padding:0;
-}
+    .sidebar{
+    position:relative;
+    height:auto;
+    width:100%;
+    padding:0;
+    }
     .container{
       width: fit-content;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -189,9 +189,12 @@ function renderTasks(tasks) {
     <h3>${task.taskname}</h3>
     <p><strong>Location:</strong> ${task.location}</p>
     <p><strong>Time required:</strong> ${task.timerequired}</p>
-    <p><strong>Status:</strong> ${task.taskstatus}</p>
   `;
-  if (task.taskstatus=="done"){ button.style.display = "none";}
+  
+  if (task.taskstatus=="done"){ 
+    button.style.display = "none";
+    taskContainer.innerHTML += `<p><strong>Status:</strong> Done</p>`;
+  }
   taskList.appendChild(taskContainer);
 }
 
