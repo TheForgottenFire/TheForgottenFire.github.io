@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="home.css">
+  <style>
+    body{
+      background-color: #f1f1f1;
+    }
+    .box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      max-width: 900px;
+      margin: 80px auto auto auto;
+    }
+
+    .b {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(167, 167, 167, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      text-align: center;
+      padding: 60px;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+      color: rgb(14, 45, 75);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s, background-color 0.3s;
+      font-weight: 800;
+      font-family:  monospace;
+    }
+
+    .b:hover {
+      background: rgba(167, 167, 167, 0.9);
+      transform: scale(1.05);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(255, 255, 255, 0.3); 
+    }
+
+    .name {
+        pointer-events: none;
+    }
+
+    .main-content{
+        background-color: #f1f1f1 ;
+        background-image: url(1.png);
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size:contain; 
+        height: 89vh;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        TaskMaster
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    <main class="main-content">
+      <h1>Task Allocation and Monitoring </h1>
+
+      <div class="box">
+        <a href="home.html" class="b">
+          <div class="name">Home</div>
+        </a>
+        <a href="tasks.html" class="b">
+          <div class="name">Tasks</div>
+        </a>
+        <a href="assign-tasks.html" class="b">
+          <div class="name">Assign Task</div>
+        </a>
+        <a href="workers.html" class="b">
+          <div class="name">Workers</div>
+        </a>
+        <a href="acceptTasks.html" class="b">
+          <div class="name">Approval</div>
+        </a>
+        <div class="b" onclick="logout()" style="cursor: pointer;">
+          <div class="name">Logout</div>
+        </a>
+      </div>
+    </main>
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    if(sessionStorage.getItem("login")==undefined || !sessionStorage.getItem("login") || sessionStorage.getItem("login")==false){
+        window.location.href = "login.html";
+    }else if(sessionStorage.getItem("login")==true && sessionStorage.getItem("access")==false){
+        if (sessionStorage.getItem("workerid") && sessionStorage.getItem("workerid")!=null){
+            window.location.href = "workerHomePage.html";
+        }else{
+            sessionStorage.setItem("login")=false;
+            sessionStorage.setItem("access")=false;
+            sessionStorage.setItem("workerid")=null;
+        }
+    }else{}
+
+    function logout(){
+        sessionStorage.clear();
+        alert("You have been logged out");
+        window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
