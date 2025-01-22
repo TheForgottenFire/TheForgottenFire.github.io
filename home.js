@@ -31,8 +31,10 @@
   
       // Define the required fields to display
       const requiredFields = [
+        "taskid",
         "taskname",
         "taskstatus",
+        "workerid",
         "workername",
         "skillsrequired",
         "location",
@@ -40,10 +42,21 @@
         "timestamp",
         "timerequired"
       ];
-  
+      const titles = [
+        "Task Id",
+        "Task Name",
+        "Task Status",
+        "Worker Id",
+        "Worker Name",
+        "Skills Required",
+        "Location",
+        "Urgency",
+        "Time Stamp",
+        "Time Required"
+      ];
       // Add table header
       const headerRow = document.createElement("tr");
-      requiredFields.forEach((field) => {
+      titles.forEach((field) => {
         const th = document.createElement("th");
         th.textContent = field.replace(/_/g, " ").toUpperCase(); // Format header text
         headerRow.appendChild(th);

@@ -107,10 +107,10 @@
   
       // Define desired column order
       const headerOrder = ["workerid", "name", "skill", "availability"];
-  
+      const headertitle = ["worker id", "name", "skills", "availability"];
       // Create header row
       const headerRow = document.createElement("tr");
-      headerOrder.forEach((header) => {
+      headertitle.forEach((header) => {
         const th = document.createElement("th");
         th.textContent = header.replace(/_/g, " ").toUpperCase();
         headerRow.appendChild(th);

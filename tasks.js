@@ -35,9 +35,18 @@ async function fetchAndPopulateTable() {
       "timeperiod"
     ];
 
+    const headertitle = [
+      "task id",
+      "task name",
+      "required skills",
+      "location",
+      "urgency",
+      "time period"
+    ];
+
     // Create the table header row
     const headerRow = document.createElement("tr");
-    headerOrder.forEach((header) => {
+    headertitle.forEach((header) => {
       const th = document.createElement("th");
       th.textContent = header.replace(/_/g, " ").toUpperCase();
       headerRow.appendChild(th);
@@ -142,13 +151,18 @@ document.getElementById("newTasksubmit").addEventListener("click", async (event)
       },
       body: JSON.stringify(task),
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    const data = await response.json();
+    
+    const data2 = JSON.parse(data.body);
+    if(data2.allocation_status.status=="Failed"){
+      alert(data2.allocation_status.message);
+      return ;
     }
+    console.log(data2);
+    alert(`Task successfully assigned to ${data2.allocation_status.workername}`);
 
-    console.log(response);
-    alert("Task added successfully!");
+    document.getElementById("existingTaskForm").reset();
+    document.getElementById("existingTaskFormContainer").style.display = "none";
     fetchAndPopulateTable();
   } catch (error) {
     console.error("Error adding existing task:", error);
@@ -173,12 +187,21 @@ document.getElementById("existingTasksubmit").addEventListener("click", async (e
       },
       body: JSON.stringify({ taskid: taskId }),
     });
-
+    
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    alert("Existing task added successfully!");
-    console.log(response);
+
+    const data = await response.json();
+    
+    const data2 = JSON.parse(data.body);
+    if(data2.allocation_status.status=="Failed"){
+      alert(data2.allocation_status.message);
+      return ;
+    }
+    console.log(data2);
+    alert(`Task successfully assigned to ${data2.allocation_status.workername}`);
+
     document.getElementById("existingTaskForm").reset();
     document.getElementById("existingTaskFormContainer").style.display = "none";
     fetchAndPopulateTable();

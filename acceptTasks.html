@@ -94,6 +94,7 @@ tr:hover {
         <li><a href="tasks.html">Tasks</a></li>
         <li><a href="assign-tasks.html">Assign Task</a></li>
         <li><a href="acceptTasks.html" style="color:#7dade7;">Submit Approval</a></li>
+        <li><a href="taskhistory.html">Task History</a></li>
         <li><a id="logout" onclick="logout()">Logout</a></li>
       </ul>
     </aside>
@@ -109,7 +110,8 @@ tr:hover {
   <script>
     // Handle accept/reject actions
 async function handleAction(workerid, taskname, action) {
-  const apiUrl = `https://eaxs5uofsi.execute-api.us-east-1.amazonaws.com/done3/done3`;
+  // const apiUrl = `https://eaxs5uofsi.execute-api.us-east-1.amazonaws.com/done3/done3`;
+  const apiUrl = "https://a5n2hdv714.execute-api.us-east-1.amazonaws.com/stage/task"
   const requestData = {
     workerid: workerid,
     taskname: taskname,
@@ -220,13 +222,13 @@ async function fetchData() {
 }
 
 
-function logout() {
-  sessionStorage.clear();
-  alert("You have been logged out");
-  window.location.href = "login.html";
-}
+  function logout() {
+    sessionStorage.clear();
+    alert("You have been logged out");
+    window.location.href = "login.html";
+  }
 
-fetchData();
+  fetchData();
 
   </script>
 </body>

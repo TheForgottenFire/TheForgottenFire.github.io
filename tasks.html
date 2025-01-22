@@ -31,11 +31,11 @@
       <h1>Tasks Dashboard</h1>
       
       <div class="task-actions">
-        <button id="addTaskButton">Add Existing Task</button>
-        <button id="newTaskButton">Add New Task</button>
+        <button id="addTaskButton" class="button">Add Existing Task</button>
+        <button id="newTaskButton" class="button">Add New Task</button>
       </div>
       <div id="existingTaskFormContainer" style="display: none;">
-        <h3>Add Existing Task</h3>
+        <h3>Assign Existing Task</h3>
         <form id="existingTaskForm">
           <label for="taskId">Task ID:</label>
           <input type="text" id="taskId" name="taskId" required>
@@ -44,7 +44,7 @@
         </form>
       </div>
       <div id="newTaskFormContainer" style="display: none;">
-        <h3>Add a New Task</h3>
+        <h3>Assign a New Task</h3>
         <form id="newTaskForm">
           <label for="taskName">Task Name:</label>
           <input type="text" id="taskName" name="taskName" required>

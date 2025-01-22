@@ -1,198 +1,54 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .header {
-    background-color: #1b2531;
-    padding: 10px;
-    color: white;
-    text-align: center;
-    font-size: 18px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  .nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .nav ul li {
-    display: inline;
-    margin-right: 20px;
-  }
-  
-  .nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .layout {
-    display: flex;
-    margin-top: 41px; 
-    align-items:flex-start;
-  }
-  
-  .sidebar {
-    background-color: #232F3E;
-    color: white;
-    width: 200px;
-    height: calc(100vh - 75px);
-    padding-top: 40px;
-    padding-left: 20px;
-    position: sticky;
-    top: 40px;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    padding: 10px;
-  }
-  
-  .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .sidebar ul li a:hover {
-    color: #7dade7;
-  }
-  
-  
-  
-  .main-content h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    grid-template-rows: auto; 
-    gap: 20px; 
-  }
-  
-  .chart {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px; 
-  }
-  
-  .chart:hover {
-    background-color: #f4f4f4;
-    transform: scale(1.05);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  .main-content {
-    padding: 20px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    flex: 1;
-    flex-grow: 1;
-    background-color: #f9f9f9;
-  }
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-  }
-  
+/* Table container styles */
+.task-progress-container {
+  padding: 20px 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  white-space: nowrap;
+  max-width: 75vw;
+}
+.main-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  #logout{
-    cursor: pointer;
-  }
-/* General styles for the main content */
-
-  
-  /* Container for task progress sections */
-  .task-progress-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; /* Space between each task */
-  }
-  
-  /* Individual task progress styling */
-  .task-progress {
-    width: 700px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 5px;
-  }
-  
-  .task-progress h3 {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  canvas {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    background-color: #e0e0e0; 
-  }
-  /* General Styles */
-
-
-/* AWS-Themed Table Styles */
-.aws-themed-table {
+/* Table styles */
+.table {
   width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  background-color: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #e1e9ff; /* Dark blue background for the table */
+  color: black; /* White text for readability */
+  font-family: Arial, sans-serif;
+  border-radius: 8px; /* Rounded corners for the table */
+  overflow: auto; /* To apply rounded corners properly */
+
 }
 
-.aws-themed-table th {
-  background-color: #0073bb;
-  color: white;
-  padding: 10px;
+
+#logout{
+  cursor: pointer;
+}
+/* Table header styles */
+.table th {
+  background-color: #ccdcff; /* Slightly lighter blue for the header */
+  color: #000000; /* White text */
   text-align: center;
-  border-bottom: 2px solid #ddd;
+  padding: 12px 16px;
+  font-weight: bold;
 }
 
-.aws-themed-table td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+/* Table row styles */
+.table td {
+  padding: 12px ;
 }
 
-.aws-themed-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.aws-themed-table tr:hover {
-  background-color: #e9f5fb;
+/* Responsive design */
+@media (max-width: 768px) {
+  .table {
+      font-size: 14px; /* Adjust font size for smaller screens */
+  }
 }

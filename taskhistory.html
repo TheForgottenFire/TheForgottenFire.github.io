@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Table container styles */
+.task-progress-container {
+    padding: 20px 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 75vw;
+}
+.main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    background-color: #e1e9ff; /* Dark blue background for the table */
+    color: black; /* White text for readability */
+    font-family: Arial, sans-serif;
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: auto; /* To apply rounded corners properly */
+
+}
+
+
+#logout{
+    cursor: pointer;
+  }
+/* Table header styles */
+.table th {
+    background-color: #ccdcff; /* Slightly lighter blue for the header */
+    color: #000000; /* White text */
+    text-align: center;
+    padding: 12px 16px;
+    font-weight: bold;
+}
+
+/* Table row styles */
+.table td {
+    padding: 12px ;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+
+  </style>
+
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        TaskMaster
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="workers.html">Workers</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="assign-tasks.html">Assign Task</a></li>
+        <li><a href="acceptTasks.html">Submit Approval</a></li>
+        <li><a href="taskhistory.html" style="color:#7dade7;">Task History</a></li>
+        <li><a id="logout" onclick="logout()">Logout</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h1>Task Allocation and Monitoring Dashboard</h1>
+
+      <div class="searchbar">
+        
+      </div>
+
+      <div class="task-progress-container">
+        <div class="table">
+          
+        </div>
+      </div>
+      
+    </main>
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    
+  async function fetchAndPopulateTable() {
+    const apiUrl = "https://p3il3e02la.execute-api.us-east-1.amazonaws.com/taskhistory/getdata";
+  
+    try {
+      // Fetch data from the API
+      const response = await fetch(apiUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      const parsedData = JSON.parse(data.body); // Assuming `data.body` is a JSON string
+      console.log(parsedData);
+  
+      // Ensure the data is an array
+      if (!Array.isArray(parsedData) || parsedData.length === 0) {
+        throw new Error("Invalid data format: Expected a non-empty array.");
+      }
+  
+      // Get the table container
+      const tableContainer = document.querySelector(".table");
+  
+      // Clear previous table if it exists
+      tableContainer.innerHTML = "";
+  
+      // Create a table element
+      const table = document.createElement("table");
+      table.classList.add("aws-themed-table");
+      
+      // Define the required fields to display
+    //   const requiredFields = [
+    //     "taskid",
+    //     "taskname",
+    //     "taskstatus",
+    //     "workerid",
+    //     "workername",
+    //     "skillsrequired",
+    //     "location",
+    //     "urgency",
+    //     "timestamp",
+    //     "timerequired"
+    //   ];
+    //   const titles = [
+    //     "Task Id",
+    //     "Task Name",
+    //     "Task Status",
+    //     "Worker Id",
+    //     "Worker Name",
+    //     "Skills Required",
+    //     "Location",
+    //     "Urgency",
+    //     "Time Stamp",
+    //     "Time Required"
+    //   ];
+    //   // Add table header
+    //   const headerRow = document.createElement("tr");
+    //   titles.forEach((field) => {
+    //     const th = document.createElement("th");
+    //     th.textContent = field.replace(/_/g, " ").toUpperCase(); // Format header text
+    //     headerRow.appendChild(th);
+    //   });
+    //   table.appendChild(headerRow);
+  
+    //   // Add table rows
+    //   parsedData.forEach((rowData) => {
+    //     const row = document.createElement("tr");
+  
+    //     requiredFields.forEach((field) => {
+    //       const td = document.createElement("td");
+    //       td.textContent = rowData[field] !== undefined ? rowData[field] : "N/A"; // Display "N/A" if field is missing
+    //       row.appendChild(td);
+    //     });
+  
+    //     table.appendChild(row);
+    //   });
+  
+    //   // Append the table to the container
+    //   tableContainer.appendChild(table);
+    } catch (error) {
+      console.error("Error fetching or displaying table data:", error);
+    }
+  }
+  
+    fetchAndPopulateTable();
+  
+    if(sessionStorage.getItem("login")==undefined || !sessionStorage.getItem("login") || sessionStorage.getItem("login")==false){
+    window.location.href = "login.html";
+    }else if(sessionStorage.getItem("login")==true && sessionStorage.getItem("access")==false){
+    if (sessionStorage.getItem("workerid") && sessionStorage.getItem("workerid")!=null){
+        window.location.href = "workerHomePage.html";
+    }else{
+        sessionStorage.setItem("login")=false;
+        sessionStorage.setItem("access")=false;
+        sessionStorage.setItem("workerid")=null;
+    }
+    }else{}
+
+    function logout(){
+    sessionStorage.clear();
+    alert("You have been logged out");
+    window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

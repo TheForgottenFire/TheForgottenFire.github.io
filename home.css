@@ -1,9 +1,20 @@
 /* Table container styles */
 .task-progress-container {
     padding: 20px 10px;
-    background-color: #f4f4f4; /* Light gray background for contrast */
-    border-radius: 8px; /* Rounded corners for the container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 75vw;
+}
+.main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Table styles */
@@ -13,7 +24,8 @@
     color: black; /* White text for readability */
     font-family: Arial, sans-serif;
     border-radius: 8px; /* Rounded corners for the table */
-    overflow: hidden; /* To apply rounded corners properly */
+    overflow: auto; /* To apply rounded corners properly */
+
 }
 
 

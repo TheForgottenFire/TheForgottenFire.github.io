@@ -8,7 +8,7 @@ form.addEventListener('submit', async (event) => {
   const skillsRequired = document.getElementById('skills-required').value;
   const timeLimit = document.getElementById('time-limit').value;
   const assignedPerson = document.getElementById('assigned-person').value;
-  const urgancy = document.getElementById('urgancy').value;
+  const urgency = document.getElementById('urgency').value;
   const worker_id = document.getElementById('worker_id').value;
 
   const taskData = {
@@ -17,7 +17,7 @@ form.addEventListener('submit', async (event) => {
     "skillsrequired": skillsRequired,
     "timerequired": timeLimit,
     "worker_name": assignedPerson,
-    "urgancy": urgancy,
+    "urgency": urgency,
     "worker_id": worker_id
   };
 
@@ -35,7 +35,7 @@ form.addEventListener('submit', async (event) => {
     if (response.status === 200) {
       const responseData = await response.json();
       console.log(responseData);
-      alert('Task created successfully!');
+      alert(`Task successfully assigned to ${responseData.worker_id} : ${responseData.worker_name}`);
       form.reset(); 
     } else {
       const errorData = await response.json();
